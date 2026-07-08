@@ -17,10 +17,26 @@
             --accent-available: #3b82f6; /* Borde azul para disponibles */
             --accent-passed: #10b981; /* Borde verde para aprobados */
             --accent-partial: #0ea5e9; /* Borde celeste para progreso */
+            --header-border: #dfe6e9;
+            --control-bg: #ffffff;
+            --control-border: #ccc;
+            --dim-opacity: 0.2;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --border-color: #4a4a4a;
+            --text-color: #e5e5e5;
+            --accent-available: #60a5fa;
+            --accent-passed: #34d399;
+            --accent-partial: #38bdf8;
+            --header-border: #3a3a3a;
+            --control-bg: #2a2a2a;
+            --control-border: #555;
         }
 
         body {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: Georgia, 'Palatino Linotype', Palatino, 'Book Antiqua', serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -37,9 +53,39 @@
             background: var(--bg-color);
             z-index: 100;
             padding-bottom: 15px;
-            border-bottom: 2px solid #dfe6e9;
+            border-bottom: 2px solid var(--header-border);
             margin-bottom: 20px;
         }
+
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .controls-row input[type="text"],
+        .controls-row select,
+        .controls-row button,
+        .header button {
+            font-family: inherit;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            border: 1px solid var(--control-border);
+            border-radius: 4px;
+            background: var(--control-bg);
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .controls-row input[type="text"] {
+            cursor: text;
+            min-width: 180px;
+            flex: 1;
+        }
+
+        .card.dimmed { opacity: var(--dim-opacity) !important; filter: grayscale(0.6); }
 
         h1 { margin: 0 0 10px 0; font-size: 1.8rem; font-weight: normal; }
 
@@ -54,7 +100,7 @@
         .progress-track {
             width: 100%;
             height: 10px;
-            background-color: #e9ecef;
+            background-color: var(--control-border);
             border-radius: 5px;
             overflow: hidden;
         }
@@ -69,7 +115,8 @@
         .legend {
             margin-top: 10px;
             font-size: 0.85rem;
-            color: #555;
+            color: var(--text-color);
+            opacity: 0.75;
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
@@ -97,20 +144,33 @@
             text-align: center;
             font-weight: bold;
             padding: 5px;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid var(--border-color);
             font-size: 1rem;
             margin-bottom: 5px;
         }
 
-        /* CATEGORIAS Y COLORES PASTEL DESATURADOS */
-        .card[data-category="penal"]    { --cat-bg: #fdf3c6; --cat-text: #4a401c; } /* Amarillo pastel */
-        .card[data-category="civil"]    { --cat-bg: #f8e5eb; --cat-text: #592e3e; } /* Rosado pastel */
-        .card[data-category="naranja"]  { --cat-bg: #fae7d9; --cat-text: #5c3b24; } /* Naranja pastel */
-        .card[data-category="publico"]  { --cat-bg: #e6f0fa; --cat-text: #2a4159; } /* Azul pastel */
-        .card[data-category="morado"]   { --cat-bg: #efe6f5; --cat-text: #41324d; } /* Morado pastel */
-        .card[data-category="rojo"]     { --cat-bg: #fae3e3; --cat-text: #5e2f2f; } /* Rojo/Rose pastel */
-        .card[data-category="gris"]     { --cat-bg: #f0f0f0; --cat-text: #333333; } /* Gris claro */
-        .card[data-category="bw"]       { --cat-bg: #ffffff; --cat-text: #222222; } /* Blanco y negro */
+        /* CATEGORIAS Y COLORES PASTEL DESATURADOS (por area del derecho) */
+        .card[data-category="penal"]    { --cat-bg: #fdf3c6; --cat-text: #4a401c; } /* Amarillo pastel: penal */
+        .card[data-category="civil"]    { --cat-bg: #f8e5eb; --cat-text: #592e3e; } /* Rosado pastel: civil */
+        .card[data-category="naranja"]  { --cat-bg: #fae7d9; --cat-text: #5c3b24; } /* Naranja pastel: economia/comercial/regulatorio/societario/tributario */
+        .card[data-category="coral"]    { --cat-bg: #f6d0c2; --cat-text: #6b3826; } /* Coral pastel: derecho del trabajo */
+        .card[data-category="publico"]  { --cat-bg: #e6f0fa; --cat-text: #2a4159; } /* Azul pastel: derecho publico */
+        .card[data-category="morado"]   { --cat-bg: #efe6f5; --cat-text: #41324d; } /* Morado pastel: procesal */
+        .card[data-category="rojo"]     { --cat-bg: #fae3e3; --cat-text: #5e2f2f; } /* Rojo/Rose pastel: talleres e introduccion al derecho */
+        .card[data-category="cafe"]     { --cat-bg: #ece1d6; --cat-text: #4a3527; } /* Cafe pastel: ingles */
+        .card[data-category="gris"]     { --cat-bg: #f0f0f0; --cat-text: #333333; } /* Gris claro: CFG y generales */
+        .card[data-category="bw"]       { --cat-bg: #ffffff; --cat-text: #222222; } /* Blanco y negro: bloques capsula (clinicas, optativos, licenciatura) */
+
+        :root[data-theme="dark"] .card[data-category="penal"]    { --cat-bg: #4a4020; --cat-text: #fdf3c6; }
+        :root[data-theme="dark"] .card[data-category="civil"]    { --cat-bg: #4a2c38; --cat-text: #f8e5eb; }
+        :root[data-theme="dark"] .card[data-category="naranja"]  { --cat-bg: #4a3320; --cat-text: #fae7d9; }
+        :root[data-theme="dark"] .card[data-category="coral"]    { --cat-bg: #4a2e22; --cat-text: #f6d0c2; }
+        :root[data-theme="dark"] .card[data-category="publico"]  { --cat-bg: #223347; --cat-text: #e6f0fa; }
+        :root[data-theme="dark"] .card[data-category="morado"]   { --cat-bg: #362a40; --cat-text: #efe6f5; }
+        :root[data-theme="dark"] .card[data-category="rojo"]     { --cat-bg: #452929; --cat-text: #fae3e3; }
+        :root[data-theme="dark"] .card[data-category="cafe"]     { --cat-bg: #362a20; --cat-text: #ece1d6; }
+        :root[data-theme="dark"] .card[data-category="gris"]     { --cat-bg: #333333; --cat-text: #e0e0e0; }
+        :root[data-theme="dark"] .card[data-category="bw"]       { --cat-bg: #2a2a2a; --cat-text: #eaeaea; }
 
         /* CARD STYLES BASICOS */
         .card {
@@ -177,9 +237,29 @@
             padding: 20px;
             text-align: center;
             font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid #ddd;
+            color: var(--text-color);
+            opacity: 0.7;
+            border-top: 1px solid var(--border-color);
         }
+
+        @media (max-width: 700px) {
+            .header > div:first-child {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .card-name { font-size: clamp(0.65rem, 2.2vw, 0.8rem); }
+            .card-code { font-size: clamp(0.55rem, 1.8vw, 0.65rem); }
+        }
+
+        .malla-container {
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+        }
+        .semester-col { scroll-snap-align: start; }
     </style>
 </head>
 <body>
@@ -187,9 +267,12 @@
 <div class="header">
     <div style="display:flex; justify-content:space-between; align-items:center;">
         <h1>Malla Interactiva Derecho UDP (Personalizada)</h1>
-        <button onclick="resetMalla()" style="padding:6px 12px; cursor:pointer; font-family:'Times New Roman', Times, serif; font-size: 0.9rem; border:1px solid #ccc; background:#fff;">Reiniciar Progreso</button>
+        <div style="display:flex; gap:8px;">
+            <button onclick="toggleTheme()" id="btn-theme" title="Cambiar tema">🌙</button>
+            <button onclick="resetMalla()">Reiniciar Progreso</button>
+        </div>
     </div>
-    
+
     <div class="stats">
         <span id="txt-credits">Créditos: 0</span>
         <span id="txt-percent">0%</span>
@@ -198,10 +281,28 @@
         <div class="progress-fill" id="bar-fill"></div>
     </div>
     <div class="legend">
-        <div><span class="dot" style="border-color: #3b82f6; background:#fff;"></span>Disponible</div>
-        <div><span class="dot" style="border-color: #0ea5e9; border-style: dashed; background:#fff;"></span>En Progreso</div>
-        <div><span class="dot" style="border-color: #10b981; background:#fff;"></span>Aprobado</div>
-        <div><span class="dot" style="border-color: #ccc; background:#f5f5f5;"></span>Bloqueado</div>
+        <div><span class="dot" style="border-color: #3b82f6; background:var(--control-bg);"></span>Disponible</div>
+        <div><span class="dot" style="border-color: #0ea5e9; border-style: dashed; background:var(--control-bg);"></span>En Progreso</div>
+        <div><span class="dot" style="border-color: #10b981; background:var(--control-bg);"></span>Aprobado</div>
+        <div><span class="dot" style="border-color: #ccc; background:var(--control-bg);"></span>Bloqueado</div>
+    </div>
+
+    <div class="controls-row">
+        <input type="text" id="search" placeholder="Buscar ramo por nombre o código..." oninput="applyFilter()">
+        <select id="filter-category" onchange="applyFilter()">
+            <option value="">Todas las áreas</option>
+            <option value="civil">Civil</option>
+            <option value="rojo">Talleres / Intro. Derecho</option>
+            <option value="naranja">Económico / Comercial</option>
+            <option value="coral">Derecho del Trabajo</option>
+            <option value="publico">Derecho Público</option>
+            <option value="penal">Penal</option>
+            <option value="morado">Procesal</option>
+            <option value="cafe">Inglés</option>
+            <option value="gris">CFG / Generales</option>
+            <option value="bw">Clínicas / Optativos / Licenciatura</option>
+        </select>
+        <button onclick="clearFilter()">Limpiar</button>
     </div>
 </div>
 
@@ -226,7 +327,7 @@
         { id: "DER06123", row: 3, sem: 2, name: "Introducción al Derecho I", credits: 5, category: "rojo", prereqs: ["DER06113"] },
         { id: "DER06124", row: 4, sem: 2, name: "Bases Generales del D° Procesal", credits: 5, category: "morado", prereqs: ["DER06113"] },
         { id: "CFG2380",  row: 6, sem: 2, name: "Historia LGBTI de Chile: Disidencias", credits: 5, category: "gris", prereqs: [] },
-        { id: "CIG1012",  row: 7, sem: 2, name: "Inglés General I", credits: 5, category: "bw", prereqs: [] },
+        { id: "CIG1012",  row: 7, sem: 2, name: "Inglés General I", credits: 5, category: "cafe", prereqs: [] },
 
         // SEMESTRE III
         { id: "DER06211", row: 1, sem: 3, name: "Derechos Reales y D° Inmobiliario", credits: 5, category: "civil", prereqs: ["DER06121"] },
@@ -234,15 +335,15 @@
         { id: "DER06213", row: 3, sem: 3, name: "Introducción al Derecho II", credits: 5, category: "rojo", prereqs: ["DER06123"] },
         { id: "DER06214", row: 5, sem: 3, name: "Economía y Derecho", credits: 5, category: "naranja", prereqs: ["DER06114"] },
         { id: "GSE1001",  row: 6, sem: 3, name: "Fundamentos de Estudios Globales", credits: 5, category: "gris", prereqs: [] },
-        { id: "CIG1013",  row: 7, sem: 3, name: "Inglés General II", credits: 5, category: "bw", prereqs: ["CIG1012"] },
+        { id: "CIG1013",  row: 7, sem: 3, name: "Inglés General II", credits: 5, category: "cafe", prereqs: ["CIG1012"] },
 
         // SEMESTRE IV
         { id: "DER06221", row: 1, sem: 4, name: "Derecho de las Obligaciones", credits: 5, category: "civil", prereqs: ["DER06211"] },
         { id: "DER06222", row: 3, sem: 4, name: "Derecho Penal Parte General I", credits: 5, category: "penal", prereqs: ["DER06123"] },
         { id: "DER06223", row: 4, sem: 4, name: "Taller Destrezas Litigación Oral", credits: 5, category: "rojo", prereqs: ["DER06115", "DER06124", "DER06211", "DER06212", "DER06213"] },
-        { id: "DER06224", row: 5, sem: 4, name: "Derecho Regulatorio", credits: 5, category: "publico", prereqs: ["DER06214"] },
+        { id: "DER06224", row: 5, sem: 4, name: "Derecho Regulatorio", credits: 5, category: "naranja", prereqs: ["DER06214"] },
         { id: "CFG2224",  row: 6, sem: 4, name: "Población, Desarrollo y Pol. Públicas", credits: 5, category: "gris", prereqs: [] },
-        { id: "CIG1014",  row: 7, sem: 4, name: "Inglés General III", credits: 5, category: "bw", prereqs: ["CIG1013"] },
+        { id: "CIG1014",  row: 7, sem: 4, name: "Inglés General III", credits: 5, category: "cafe", prereqs: ["CIG1013"] },
         
         // SEMESTRE V
         { id: "DER06311", row: 1, sem: 5, name: "Derecho de Daños", credits: 5, category: "civil", prereqs: ["DER06221"] },
@@ -267,7 +368,7 @@
         { id: "DER06413", row: 3, sem: 7, name: "Proceso Penal", credits: 5, category: "morado", prereqs: ["DER06323"] },
         { id: "DER06414", row: 4, sem: 7, name: "Taller de Negociación Colaborativa", credits: 5, category: "rojo", prereqs: ["DER06314"] },
         { id: "DER06415", row: 5, sem: 7, name: "Derecho Tributario", credits: 5, category: "naranja", prereqs: ["DER06224"] },
-        { id: "DER06416", row: 6, sem: 7, name: "Derecho del Trabajo", credits: 5, category: "morado", prereqs: ["DER06214", "DER06223"] },
+        { id: "DER06416", row: 6, sem: 7, name: "Derecho del Trabajo", credits: 5, category: "coral", prereqs: ["DER06214", "DER06223"] },
         { id: "GSE1003",  row: 7, sem: 7, name: "Minorías Marginalizadas (Global)", credits: 5, category: "gris", prereqs: [] },
         
         // SEMESTRE VIII
@@ -276,14 +377,14 @@
 
         // SEMESTRE IX
         { id: "DER06C_F2", row: 1, sem: 9, name: "Clínicas Jurídicas II o Pasantía", credits: 12, height: 2, category: "bw", prereqs: ["DER06C_F1"] },
-        { id: "DER06511", row: 3, sem: 9, name: "Filosofía del Derecho", credits: 5, category: "bw", prereqs: ["DER06213"] },
-        { id: "DER06512", row: 4, sem: 9, name: "Tecnología e Inteligencia Artificial", credits: 5, category: "bw", prereqs: ["DER06C_F1"] },
+        { id: "DER06511", row: 3, sem: 9, name: "Filosofía del Derecho", credits: 5, category: "gris", prereqs: ["DER06213"] },
+        { id: "DER06512", row: 4, sem: 9, name: "Tecnología e Inteligencia Artificial", credits: 5, category: "gris", prereqs: ["DER06C_F1"] },
         { id: "DER06OP_4_5", row: 5, sem: 9, name: "Cursos Optativos", credits: 10, height: 2, isAccumulative: true, step: 1, category: "bw", prereqs: ["DER06321", "DER06322", "DER06323", "DER06324"] },
 
         // SEMESTRE X
         { id: "DER06521", row: 1, sem: 10, name: "Programa Prep. Licenciatura", credits: 23, height: 3, category: "bw", prereqs: ["DER06415", "DER06416", "DER06511", "DER06512"] },
-        { id: "DER06522", row: 4, sem: 10, name: "Ética y Responsabilidad Prof.", credits: 3, category: "bw", prereqs: ["DER06C_F2"] },
-        { id: "DER06523", row: 5, sem: 10, name: "Taller de Inserción y Emprendimiento", credits: 3, category: "bw", prereqs: ["DER06C_F2"] },
+        { id: "DER06522", row: 4, sem: 10, name: "Ética y Responsabilidad Prof.", credits: 3, category: "gris", prereqs: ["DER06C_F2"] },
+        { id: "DER06523", row: 5, sem: 10, name: "Taller de Inserción y Emprendimiento", credits: 3, category: "gris", prereqs: ["DER06C_F2"] },
     ];
 
     let passed = new Set();
@@ -478,7 +579,44 @@
         }
         return roman;
     }
-    
+
+    function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        document.getElementById('btn-theme').innerText = theme === 'dark' ? '☀️' : '🌙';
+        localStorage.setItem('malla_theme', theme);
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    function initTheme() {
+        const saved = localStorage.getItem('malla_theme');
+        const preferred = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(preferred);
+    }
+
+    function applyFilter() {
+        const query = document.getElementById('search').value.trim().toLowerCase();
+        const category = document.getElementById('filter-category').value;
+
+        subjects.forEach(sub => {
+            const el = document.getElementById(sub.id);
+            if (!el) return;
+            const matchesQuery = !query || sub.name.toLowerCase().includes(query) || sub.id.toLowerCase().includes(query);
+            const matchesCategory = !category || sub.category === category;
+            el.classList.toggle('dimmed', !(matchesQuery && matchesCategory));
+        });
+    }
+
+    function clearFilter() {
+        document.getElementById('search').value = '';
+        document.getElementById('filter-category').value = '';
+        applyFilter();
+    }
+
+    initTheme();
     init();
 </script>
 </body>
