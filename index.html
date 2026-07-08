@@ -11,28 +11,32 @@
 
     <style>
         :root {
-            --bg-color: #fcfcfc;
-            --border-color: #ced4da;
-            --text-color: #2c2c2c;
-            --accent-available: #3b82f6; /* Borde azul para disponibles */
-            --accent-passed: #10b981; /* Borde verde para aprobados */
-            --accent-partial: #0ea5e9; /* Borde celeste para progreso */
-            --header-border: #dfe6e9;
-            --control-bg: #ffffff;
-            --control-border: #ccc;
+            --bg-color: #fdf6f8;
+            --border-color: #e9d3dc;
+            --text-color: #3d2b35;
+            --accent-available: #c9779a; /* Rosa empolvado: disponible */
+            --accent-passed: #93a878; /* Salvia suave: aprobado */
+            --accent-partial: #d9a441; /* Dorado suave: en progreso */
+            --header-border: #f0d9e2;
+            --control-bg: #fffbfc;
+            --control-border: #e3b8c7;
             --dim-opacity: 0.2;
+            --card-shadow: 0 1px 4px rgba(201, 90, 140, 0.12);
+            --card-shadow-hover: 0 8px 18px rgba(201, 90, 140, 0.22);
         }
 
         :root[data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --border-color: #4a4a4a;
-            --text-color: #e5e5e5;
-            --accent-available: #60a5fa;
-            --accent-passed: #34d399;
-            --accent-partial: #38bdf8;
-            --header-border: #3a3a3a;
-            --control-bg: #2a2a2a;
-            --control-border: #555;
+            --bg-color: #241820;
+            --border-color: #4a2e3a;
+            --text-color: #f3e3ea;
+            --accent-available: #e8a0bd;
+            --accent-passed: #a8c48a;
+            --accent-partial: #e8c374;
+            --header-border: #3a2530;
+            --control-bg: #331f29;
+            --control-border: #6b4254;
+            --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+            --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.45);
         }
 
         body {
@@ -71,12 +75,22 @@
         .header button {
             font-family: inherit;
             font-size: 0.85rem;
-            padding: 6px 10px;
+            padding: 7px 16px;
             border: 1px solid var(--control-border);
-            border-radius: 4px;
+            border-radius: 999px;
             background: var(--control-bg);
             color: var(--text-color);
             cursor: pointer;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .controls-row input[type="text"]:focus,
+        .controls-row select:focus,
+        .controls-row button:focus-visible,
+        .header button:focus-visible {
+            outline: none;
+            border-color: var(--accent-available);
+            box-shadow: 0 0 0 3px rgba(201, 119, 154, 0.25);
         }
 
         .controls-row input[type="text"] {
@@ -87,7 +101,14 @@
 
         .card.dimmed { opacity: var(--dim-opacity) !important; filter: grayscale(0.6); }
 
-        h1 { margin: 0 0 10px 0; font-size: 1.8rem; font-weight: normal; }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.85rem;
+            font-weight: normal;
+            font-style: italic;
+            letter-spacing: 0.2px;
+            color: var(--accent-available);
+        }
 
         .stats {
             display: flex;
@@ -101,13 +122,13 @@
             width: 100%;
             height: 10px;
             background-color: var(--control-border);
-            border-radius: 5px;
+            border-radius: 999px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background-color: #6b7280;
+            background: linear-gradient(90deg, var(--accent-partial), var(--accent-available));
             width: 0%;
             transition: width 0.4s ease;
         }
@@ -121,7 +142,7 @@
             gap: 15px;
             flex-wrap: wrap;
         }
-        .dot { width: 12px; height: 12px; display: inline-block; margin-right: 5px; border: 2px solid; }
+        .dot { width: 12px; height: 12px; display: inline-block; margin-right: 5px; border: 2px solid; border-radius: 50%; }
 
         /* MALLA GRID SYSTEM */
         .malla-container {
@@ -143,8 +164,10 @@
         .sem-header {
             text-align: center;
             font-weight: bold;
+            font-style: italic;
             padding: 5px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--accent-available);
+            color: var(--accent-available);
             font-size: 1rem;
             margin-bottom: 5px;
         }
@@ -178,7 +201,7 @@
             background-color: var(--cat-bg);
             color: var(--cat-text);
             border: 2px solid transparent; /* El borde indicará el estado */
-            border-radius: 4px;
+            border-radius: 12px;
             padding: 8px;
             font-size: 0.8rem;
             height: 95px;
@@ -187,11 +210,11 @@
             justify-content: space-between;
             transition: all 0.2s ease-in-out;
             cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: var(--card-shadow);
             user-select: none;
         }
 
-        .card:hover { transform: translateY(-2px); z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .card:hover { transform: translateY(-3px); z-index: 10; box-shadow: var(--card-shadow-hover); }
 
         .card-code { font-size: 0.65rem; margin-bottom: 2px; opacity: 0.7; font-family: sans-serif; letter-spacing: 0.5px;}
         .card-name { font-weight: bold; line-height: 1.1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
@@ -200,33 +223,33 @@
         .spacer { height: 95px; border: 1px dashed transparent; }
 
         /* ESTADOS DE AVANCE (MODIFICAN OPACIDAD Y BORDES, PRESERVAN FONDO) */
-        .locked { 
-            opacity: 0.45; 
-            filter: grayscale(0.7); 
-            pointer-events: none; 
-            border-color: #e5e7eb;
+        .locked {
+            opacity: 0.45;
+            filter: grayscale(0.7);
+            pointer-events: none;
+            border-color: var(--border-color);
         }
-        .available { 
+        .available {
             opacity: 1;
             filter: none;
-            border-color: var(--accent-available); /* Azul */
-            box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+            border-color: var(--accent-available); /* Rosa empolvado */
+            box-shadow: 0 0 6px rgba(201, 119, 154, 0.45);
         }
         .partial {
             opacity: 1;
             border-style: dashed;
             border-color: var(--accent-partial);
         }
-        .passed { 
+        .passed {
             opacity: 1;
             filter: none;
-            border-color: var(--accent-passed); /* Verde */
-            box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+            border-color: var(--accent-passed); /* Salvia */
+            box-shadow: 0 0 6px rgba(147, 168, 120, 0.4);
         }
 
         /* INTERACTIONS */
-        .highlight-prereq { box-shadow: 0 0 0 3px #f59e0b; z-index: 5; }
-        .highlight-unlock { box-shadow: 0 0 0 3px #3b82f6; z-index: 5; }
+        .highlight-prereq { box-shadow: 0 0 0 3px var(--accent-partial); z-index: 5; }
+        .highlight-unlock { box-shadow: 0 0 0 3px var(--accent-available); z-index: 5; }
 
         .card-tall { height: 200px; } 
         .card-xtall { height: 305px; } 
@@ -281,10 +304,10 @@
         <div class="progress-fill" id="bar-fill"></div>
     </div>
     <div class="legend">
-        <div><span class="dot" style="border-color: #3b82f6; background:var(--control-bg);"></span>Disponible</div>
-        <div><span class="dot" style="border-color: #0ea5e9; border-style: dashed; background:var(--control-bg);"></span>En Progreso</div>
-        <div><span class="dot" style="border-color: #10b981; background:var(--control-bg);"></span>Aprobado</div>
-        <div><span class="dot" style="border-color: #ccc; background:var(--control-bg);"></span>Bloqueado</div>
+        <div><span class="dot" style="border-color: var(--accent-available); background:var(--control-bg);"></span>Disponible</div>
+        <div><span class="dot" style="border-color: var(--accent-partial); border-style: dashed; background:var(--control-bg);"></span>En Progreso</div>
+        <div><span class="dot" style="border-color: var(--accent-passed); background:var(--control-bg);"></span>Aprobado</div>
+        <div><span class="dot" style="border-color: var(--border-color); background:var(--control-bg);"></span>Bloqueado</div>
     </div>
 
     <div class="controls-row">
